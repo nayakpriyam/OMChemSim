@@ -5,6 +5,7 @@ model ShortcutColumn "Model of a shortcut column to calculate minimum reflux in 
 //==============================================================================
   //Header Files and Parameters
   extends Simulator.Files.Icons.DistillationColumn;
+  extends GuessModels.InitialGuess;
   import data = Simulator.Files.ChemsepDatabase;
   parameter data.GeneralProperties C[Nc] "Component instances array" annotation(
     Dialog(tab = "Column Specifications", group = "Component Parameters"));
@@ -16,6 +17,10 @@ model ShortcutColumn "Model of a shortcut column to calculate minimum reflux in 
     Dialog(tab = "Column Specifications", group = "Calculation Parameters"));
   parameter String Ctype = "Total" "Condenser type: Total or Partial" annotation(
     Dialog(tab = "Column Specifications", group = "Calculation Parameters"));
+  //Thermodynamics packages variables  
+  Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3]; 
+  Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
+  Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];
   //==============================================================================
   //Model Variables
   Real F_p[3](each unit = "mol/s", each min = 0, each start = Fg) "Inlet stream molar flow";
@@ -28,7 +33,7 @@ model ShortcutColumn "Model of a shortcut column to calculate minimum reflux in 
   
   Real Ntmin(unit = "-", min = 0, start = 10) "Minimum Number of trays";
   Real RRmin(unit = "-", start = 1) "Minimum Reflux Ratio";
-  Real alpha_c[Nc](unit = "-") "Relative Volatility";
+  Real alpha_c[Nc](each unit = "-") "Relative Volatility";
   Real theta(unit = "-", start = 1) "Fraction";
   Real T(start=Tg) "Thermodynamic Adjustment", P(start=Pg) "Thermodynamic Adjustment";
   Real Tcond(unit = "K", start = max(C[:].Tb), min = 0)"Condenser temperature";
@@ -70,7 +75,6 @@ model ShortcutColumn "Model of a shortcut column to calculate minimum reflux in 
   Simulator.Files.Interfaces.enConn En2 annotation(
     Placement(visible = true, transformation(origin = {254, -592}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {250, -600}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
-  extends GuessModels.InitialGuess;
 equation
 //==============================================================================
 // Connector equations
@@ -211,7 +215,7 @@ equation
   Hvapcond = sum(xvapcond_c[:] .* Hvapcond_c[:]);
   Fvaprec .* xvapcond_c[:] = Fliqrec .* xliqcond_c[:] + F_p[3] .* x_pc[3, :];
   if Ctype == "Partial" then
-    x_pc[3, :] = K[:] .* xliqcond_c[:];
+    x_pc[3, :] = K_c[:] .* xliqcond_c[:];
   elseif Ctype == "Total" then
     x_pc[3, :] = xliqcond_c[:];
   end if;

@@ -2,12 +2,12 @@ within Simulator.Files.ThermodynamicFunctions;
 
 function PoyntingCF "Function to compute the Poynting Correction Factor"
   extends Modelica.Icons.Function;
-  import Simulator.Files.Thermodynamic_Functions.*;
+  import Simulator.Files.ThermodynamicFunctions.*;
   input Integer Nc;
   input Real Pc, Tc, RP, AF, MW;
   input Real T, P;
   input Real gma, Psat, rho;
-  parameter Integer Choice = 2;
+  input Integer Choice = 2;
   output Real PCF;
 protected
   Real vl;

@@ -1,7 +1,14 @@
 within Simulator.Files.ThermodynamicPackages;
 
   model NRTL
-    import Simulator.Files.Thermodynamic_Functions.*;
+    import Simulator.Files.ThermodynamicFunctions.*;
+    parameter Integer Nc "Number of components";
+    parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc];
+    Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1);
+    Real P(unit = "Pa", min = 0) "Pressure";
+    Real T(unit = "K") "Temperature";
+    Real Pbubl(unit = "Pa", min = 0) "Bubble point pressure";
+    Real Pdew(unit = "Pa", min = 0) "dew point pressure";
     Simulator.Files.Models.gammaNRTL Gma(Nc = Nc, C = C, x_c = x_pc[2, :], T = T), GmaDew(Nc = Nc, C = C, x_c = xliqdew_c, T = T), GmaBubl(Nc = Nc, C = C, x_c = x_pc[1, :], T = T);
     Real xliqdew_c[Nc], rho_c[Nc];
     Real Cpres_p[3] "residual specific heat", Hres_p[3] "residual enthalpy", Sres_p[3] "residual Entropy", K_c[Nc], gma_c[Nc](each start = 1), gmabubl_c[Nc](each start = 1), gmadew_c[Nc](each start = 1);

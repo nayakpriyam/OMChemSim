@@ -5,7 +5,7 @@ within Simulator.Files.ThermodynamicFunctions;
   input Integer Nc;
   input  Real a_cc[Nc,Nc];
   input Real T;
-  output Real tau_cc[Nc,Nc](start = 1);
+  output Real tau_cc[Nc,Nc](each start = 1);
   
   protected  Real R = 1.98721;
   algorithm

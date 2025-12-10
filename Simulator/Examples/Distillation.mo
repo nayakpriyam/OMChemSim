@@ -24,10 +24,10 @@ package Distillation "Example of Simulating a Distillation Column"
   end Reboiler;
 
   model DistColumn "Extension of Distillation Column along with instances of Condenser, Tray and Reboiler"
-    extends Simulator.UnitOperations.DistillationColumn.DistCol;
-    Condenser condenser(Nc = Nc, C = C, Ctype = Ctype, Bin = Bin_t[1]);
-    Reboiler reboiler(Nc = Nc, C = C, Bin = Bin_t[Nt]);
-    Tray tray[Nt - 2](each Nc = Nc, each C = C, Bin = Bin_t[2:Nt - 1]);
+    extends Simulator.UnitOperations.DistillationColumn.DistCol(
+    redeclare Condenser condenser(Nc = Nc, C = C, Ctype = Ctype),
+    redeclare Reboiler reboiler(Nc = Nc, C = C),
+    redeclare Tray tray[Nt - 2](each Nc = Nc, each C = C));
   annotation(
       Documentation(info = "<html><head></head><body><span style=\"font-size: 12px;\">This is a non-executable model is created inside the package Distillation to extend the&nbsp;</span><a href=\"modelica://Simulator.UnitOperations.DistillationColumn.DistCol\">Distillation Column</a><span style=\"font-size: 12px;\">&nbsp;model along with the necessary property method from&nbsp;</span>ThermodynamicPackages<span style=\"font-size: 12px;\">&nbsp;which is&nbsp;</span><a href=\"modelica://Simulator.Files.ThermodynamicPackages.RaoultsLaw\">RaoultsLaw</a><span style=\"font-size: 12px;\">&nbsp;in this case.</span><div><br></div><div>Condenser, Tray and Reboiler models are also instantiated in this model to complete building of distillation column model.<br><div><span style=\"font-size: 12px;\"><br></span></div><div>It will be instantiated in the&nbsp;<a href=\"modelica://Simulator.Examples.Distillation.DistillationSimulation_Ex1\">DistillationSimulation_Ex1</a>,&nbsp;</div><div><a href=\"modelica://Simulator.Examples.Distillation.DistillationSimulation_Ex2\">DistillationSimulation_Ex2</a>,&nbsp;<a href=\"modelica://Simulator.Examples.Distillation.DistillationSimulation_Ex3\">DistillationSimulation_Ex3</a>,&nbsp;</div><div><a href=\"modelica://Simulator.Examples.Distillation.DistillationSimulation_Ex4\">DistillationSimulation_Ex4</a>,&nbsp;<a href=\"modelica://Simulator.Examples.Distillation.DistillationSimulation_Ex5\">DistillationSimulation_Ex5</a>&nbsp;model to create the required instance of the distillation column model.</div></div></body></html>"));
   end DistColumn;
@@ -88,7 +88,7 @@ package Distillation "Example of Simulating a Distillation Column"
     parameter data.Benzene benz;
     parameter data.Toluene tol;
     parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc] = {benz, tol};
-    Simulator.Examples.Distillation.DistColumn B1(Nc = Nc, C = C, Nt = 12, Ni = 1, InT_s = {7}) annotation(
+    Simulator.Examples.Distillation.DistColumn B1(Nc = Nc, C = C, Nt = 12, Ni = 1, InT_s = {7}, Ctype = "Total") annotation(
       Placement(visible = true, transformation(origin = {-26, 6.66134e-16}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Simulator.Examples.Distillation.MS S1(Nc = Nc, C = C) annotation(
       Placement(visible = true, transformation(origin = {-76, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

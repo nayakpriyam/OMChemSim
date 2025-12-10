@@ -10,7 +10,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     P = 101325;
     T = 351;
@@ -22,12 +22,12 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
 
   model TVFflash"Material Stream simulation with temperature and vapor fraction flash specifications"
   
-    Simulator.Files.ChemsepDatabase data;
+    import data = Simulator.Files.ChemsepDatabase;
     parameter data.Methanol meth;
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     xvap = 0.036257;
     T = 351;
@@ -44,7 +44,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     P = 101325;
     xvap = 0.036257;
@@ -61,7 +61,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     P = 101325;
     H_p[1] = -34452;
@@ -78,7 +78,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     P = 101325;
     S_p[1] = -84.39;
@@ -95,7 +95,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Ethanol eth;
     parameter data.Water wat;
     extends Streams.MaterialStream(Nc = 3, C = {meth, eth, wat});
-    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw;
+    extends Simulator.Files.ThermodynamicPackages.RaoultsLaw(Nc = 3, C = {meth, eth, wat});
   equation
     P = 202650;
     T = 320;
@@ -110,8 +110,8 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     import data = Simulator.Files.ChemsepDatabase;
     parameter data.Ethanol eth;
     parameter data.Water wat;
-    extends Simulator.Streams.MaterialStream(Nc = 2, C = {eth, wat}, Pbubl(start = 101325), Pdew(start = 101325), x_pc(each start = 0.33), xvap(start = 0.68));
-    extends Simulator.Files.ThermodynamicPackages.UNIQUAC;
+    extends Simulator.Streams.MaterialStream(Nc = 2, C = {eth, wat}, Pbubl(start = 101325), Pdew(start = 101325), xvap(start = 0.68),gmadew_c(each start = 2.2), gmabubl_c(each start = 1));
+    extends Simulator.Files.ThermodynamicPackages.UNIQUAC(Nc = 2, C = {eth, wat});
   equation
     x_pc[1, :] = {0.5, 0.5};
     F_p[1] = 50;
@@ -127,7 +127,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     parameter data.Onehexene ohex;
     parameter data.Ethanol eth;
     extends Simulator.Streams.MaterialStream(Nc = 2, C = {ohex, eth}, x_pc(each start = 0.33));
-    extends Simulator.Files.ThermodynamicPackages.NRTL;
+    extends Simulator.Files.ThermodynamicPackages.NRTL(Nc = 2, C = {ohex, eth});
   equation
     x_pc[1, :] = {0.5, 0.5};
     F_p[1] = 100;
@@ -138,7 +138,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
       end NRTL;
 
   model GraysonStreed "Material stream simulated with Grayson-Streed property package"
-  
+  //This example can be run using the homotopy non linear solver, the results differ from those obtained using the old frontend.
     import data = Simulator.Files.ChemsepDatabase;
     parameter data.Ethylene eth;
     parameter data.Acetylene acet;
@@ -148,7 +148,7 @@ package MaterialStream "Examples of Simulating Material Stream using Different M
     //Sp = Solublity Parameter
     //V = Molar Volume
     //All the above three parameters have to be mentioned as arguments while extending the thermodynamic Package Grayson Streed  as shown below
-    extends Simulator.Files.ThermodynamicPackages.GraysonStreed(W_c = {0.0949, 0.1841, 0.244612, 0.3125}, SP_c = {0.00297044, 0.00449341, 0.00437069, 0.00419199}, V_c = {61, 42.1382, 84.7207, 60.4292});
+    extends Simulator.Files.ThermodynamicPackages.GraysonStreed(Nc = 4, C = {eth, acet, dich, prop}, W_c = {0.0949, 0.1841, 0.244612, 0.3125}, SP_c = {0.00297044, 0.00449341, 0.00437069, 0.00419199}, V_c = {61, 42.1382, 84.7207, 60.4292});
     extends Simulator.Streams.MaterialStream(Nc = 4, C = {eth, acet, dich, prop});
     //Equations
   equation

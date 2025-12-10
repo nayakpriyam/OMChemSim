@@ -7,15 +7,16 @@ model EquilibriumReaction "Model of an equilibrium reaction used in equilibrium 
 
   parameter Integer Nr "Number of reactions" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
+  parameter Integer BC_r[Nr] "Base component of reactions" annotation(Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
   parameter Real Coef_cr[Nc, Nr] "Stoichiometric coefficient of components" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
   parameter String Rmode = "ConstantK" "Mode of specifying equilibrium constant: ''ConstantK'', ''Tempfunc''" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
   parameter Real Kg[Nr] "Equilibrium Constant, applicable if ConstantK is chosen in Rmode" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
-  parameter Real A[Nr,4] "Coefficient of A in equation logk =(A1 + A2*T + A3*T^2 + A4*logT)/(B1 + B2*T + B3*T^2 + B4*logT), applicable if Tempfunc is chosen in Rmode" annotation(
+  parameter Real A[Nr,4] = fill(1,Nr,4) "Coefficient of A in equation logk =(A1 + A2*T + A3*T^2 + A4*logT)/(B1 + B2*T + B3*T^2 + B4*logT), applicable if Tempfunc is chosen in Rmode" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
-  parameter Real B[Nr,4] "Coefficient of B in equation logk =(A1 + A2*T + A3*T^2 + A4*logT)/(B1 + B2*T + B3*T^2 + B4*logT), applicable if Tempfunc is chosen in Rmode" annotation(
+  parameter Real B[Nr,4] = fill(1,Nr,4) "Coefficient of B in equation logk =(A1 + A2*T + A3*T^2 + A4*logT)/(B1 + B2*T + B3*T^2 + B4*logT), applicable if Tempfunc is chosen in Rmode" annotation(
     Dialog(tab = "Reactions", group = "Equilibrium Reaction Parameters"));
    Real T;
   //Stochiometry of reactions
@@ -26,7 +27,7 @@ model EquilibriumReaction "Model of an equilibrium reaction used in equilibrium 
 
   
   //Equilibrium Constant
-  Real K[Nr](start=xliqg);
+  Real K[Nr](each start=xliqg);
   Real N[Nr](each start= Fg),D[Nr](each start=Fg);
   
   extends Simulator.GuessModels.InitialGuess;

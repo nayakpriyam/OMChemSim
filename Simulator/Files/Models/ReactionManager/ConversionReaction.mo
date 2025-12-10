@@ -3,8 +3,9 @@ within Simulator.Files.Models.ReactionManager;
   model ConversionReaction "Model of a conversion reaction used in conversion reactor"
   //===================================================================================================
   import Simulator.Files.*;
-  import data = Simulator.Files.Chemsep_Database;
-    //Number of Reactions involved in the process
+  parameter ChemsepDatabase.GeneralProperties C[Nc];
+  parameter Integer Nc;
+  //Number of Reactions involved in the process
   parameter Integer Nr "Number of reactions" annotation(
     Dialog(tab = "Reactions", group = "Conversion Reaction Parameters"));
   parameter Integer BC_r[Nr] "Base component in the reactions" annotation(

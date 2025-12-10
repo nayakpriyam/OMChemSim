@@ -31,21 +31,21 @@ package PFR "Example of Simulating a PFR"
     Simulator.Streams.EnergyStream Energy annotation(
       Placement(visible = true, transformation(origin = {-14, -54}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
-//========================================================================
-//Connections
+  //========================================================================
+  //Connections
     connect(Energy.Out, B1.En) annotation(
       Line(points = {{-4, -54}, {2, -54}, {2, 0}, {4, 0}}, color = {255, 0, 0}));
     connect(B1.Out, S2.In) annotation(
       Line(points = {{36, 0}, {80, 0}, {80, 0}, {80, 0}}, color = {0, 70, 70}));
     connect(S1.Out, B1.In) annotation(
       Line(points = {{-60, 0}, {-30, 0}, {-30, 0}, {-30, 0}}, color = {0, 70, 70}));
-//========================================================================
-//Inputs and Specifications
+  //========================================================================
+  //Inputs and Specifications
     S1.x_pc[1, :] = {0.2, 0.8, 0};
+    B1.X_r[1] = 0.0991;
     S1.P = 100000;
     S1.T = 360;
     S1.F_p[1] = 100;
-    B1.X_r[1] = 0.0991;
     annotation(
       Documentation(info = "<html><head></head><body><span style=\"font-size: 12px;\">This is an executable model to simualate the PFR example where all the components are defined, material stream, plug flow reactor &amp; kinetic reaction specifications are declared, model instances are connected</span><span style=\"font-size: 12px;\">.&nbsp;</span><a href=\"modelica://Simulator.UnitOperations.PFR.PFR\" style=\"font-size: 12px;\">PFR</a><span style=\"font-size: 12px;\">&nbsp;model from the UnitOperations package has been instantiated here.</span><div><div><span style=\"font-size: 12px;\"><br></span></div><div><div style=\"font-size: 12px;\"><b>Material Stream Information</b></div><div style=\"font-size: 12px;\"><br></div><div style=\"font-size: 12px;\"><div><b>Molar Flow Rate:</b>&nbsp;100 mol/s</div><div><b>Mole Fraction (Ethylene Oxide):</b>&nbsp;0.2</div><div><b>Mole Fraction (Water):</b>&nbsp;0.8</div><div><b>Mole Fraction (Ethylene Glycol):</b>&nbsp;0</div><div><b>Pressure:</b>&nbsp;100000 Pa</div><div><b>Temperature:</b>&nbsp;360 K</div></div><div style=\"font-size: 12px;\"><br></div><div style=\"font-size: 12px;\"><b>Reaction</b></div><div style=\"font-size: 12px;\">Ethylene Oxide + Water ----&gt; Ethylene Glycol</div><div style=\"font-size: 12px;\"><br></div><span style=\"font-size: 12px;\"><b>Compressor Specification: </b>Conversion of Ethylene Oxide: 9.91%</span></div><div><span style=\"font-size: 12px;\"><span class=\"Apple-tab-span\" style=\"white-space: pre;\">				</span>&nbsp;<span class=\"Apple-tab-span\" style=\"white-space: pre;\">	</span>&nbsp;Operation Mode: isothermal</span></div></div></body></html>"));
       end PFRSimulation;

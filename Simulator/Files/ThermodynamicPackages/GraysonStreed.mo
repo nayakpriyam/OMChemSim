@@ -4,7 +4,9 @@ within Simulator.Files.ThermodynamicPackages;
   
   //====================================================================
   //Header Files and Parameters
-    import Simulator.Files.Thermodynamic_Functions.*;
+    import Simulator.Files.ThermodynamicFunctions.*;
+    parameter Integer Nc "Number of components";
+    parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc];
     parameter Real R = 8.314;
     parameter Real u = 1;
     import Simulator.Files.*;
@@ -14,6 +16,12 @@ within Simulator.Files.ThermodynamicPackages;
     parameter Real T_c[Nc] = C.Tc;
     parameter Real Pc_c[Nc] = C.Pc;
     parameter Real Rgas = 8314470;
+    Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1);
+    Real P(unit = "Pa", min = 0) "Pressure";
+    Real T(unit = "K") "Temperature";
+    Real Pbubl(unit = "Pa", min = 0) "Bubble point pressure";
+    Real Pdew(unit = "Pa", min = 0) "dew point pressure";
+  
     
   //====================================================================
   //Model Variables
@@ -34,7 +42,7 @@ within Simulator.Files.ThermodynamicPackages;
     Real Cvapdew[4], ZRvapdew[3, 2], ZVapdew[3];
     Real gmabubl_c[Nc](each start = 0.5), gmadew_c[Nc](each start = 2.06221);
     Real gmaliq_c[Nc], Pvap_c[Nc];
-    Real A_c[Nc], B_c[Nc], C_c[Nc], D_c[Nc], E, G, H_c[Nc], I, J;
+    Real A_c[Nc], B_c[Nc], C_c[Nc], D_c[Nc], E, G, H_c[Nc] (each start = 1.2), I, J;
     Real xliqdew_c[Nc];
     Real Tr_c[Nc];
     Real Prbubl_c[Nc](each start = 2);
@@ -193,7 +201,7 @@ within Simulator.Files.ThermodynamicPackages;
     Cvapdew[2] := -(1 + Bvapdew - u * Bvapdew);
     Cvapdew[3] := Avapdew - u * Bvapdew - u * Bvapdew ^ 2;
     Cvapdew[4] := -Avapdew * Bvapdew;
-    ZRvapdew := Modelica.Math.Vectors.Utilities.roots(Cvapdew);
+    ZRvapdew := Modelica.Math.Polynomials.roots(Cvapdew);
     ZVapdew := {ZRvapdew[i, 1] for i in 1:3};
     Zvapdew := max({ZVapdew});
   algorithm
@@ -201,7 +209,7 @@ within Simulator.Files.ThermodynamicPackages;
     Cvap[2] := -(1 + Bvap - u * Bvap);
     Cvap[3] := Avap - u * Bvap - u * Bvap ^ 2;
     Cvap[4] := -Avap * Bvap;
-    ZRvap := Modelica.Math.Vectors.Utilities.roots(Cvap);
+    ZRvap := Modelica.Math.Polynomials.roots(Cvap);
     ZVap := {ZRvap[i, 1] for i in 1:3};
     Zvap := max({ZVap});
 //==========================================================================================================

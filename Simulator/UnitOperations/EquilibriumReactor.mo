@@ -13,7 +13,6 @@ extends Simulator.Files.Icons.EquilibriumReactor;
   parameter Integer Nc "Number of components" annotation(
     Dialog(tab = "Reactor Specifications", group = "Component Parameters"));
   //======================================================================================
-  extends Simulator.GuessModels.InitialGuess;
   //Connector Variables
   Real Pin(unit = "Pa", min = 0, start = Pg) "Inlet stream pressure";
   Real Tin(unit = "K", min = 0, start = Tg) "Inlet stream temperature";

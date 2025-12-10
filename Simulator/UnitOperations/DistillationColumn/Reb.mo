@@ -2,7 +2,7 @@ within Simulator.UnitOperations.DistillationColumn;
 
   model Reb "Model of a reboiler used in distillation column"
     import Simulator.Files.*;
-    parameter Integer Nc = 2 "Number of components";
+    parameter Integer Nc "Number of components";
     parameter ChemsepDatabase.GeneralProperties C[Nc];
     parameter Boolean Bin = false;
     Real P(unit = "Pa", min = 0, start = Pg) "Pressure";
@@ -17,7 +17,7 @@ within Simulator.UnitOperations.DistillationColumn;
     Real Fout(unit = "mol/s", min = 0, start = Fg) "Side draw molar flow";
     Real Fvapout(unit = "mol/s", min = 0, start =Fvapg) "Outlet vapor molar flow";
     Real xout_c[Nc](each unit = "-", each min = 0, each max = 1, start=xg) "Side draw mole fraction";
-    Real xvapout_c[Nc](each unit = "-", each min = 0, each max = 1, start=xvapg) "Outlet vapor component mole fraction";
+    Real xvapout_c[Nc](each unit = "-", each min = 0, each max = 1, each start=xvapg) "Outlet vapor component mole fraction";
     Real Hvapout(unit = "kJ/kmol",start=Hvapg) "Outlet vapor molar enthalpy";
     Real Hvapout_c[Nc](each unit = "kJ/kmol") "Outlet vapor component molar enthalpy";
     Real Q(unit = "W") "Heat load";
@@ -25,6 +25,11 @@ within Simulator.UnitOperations.DistillationColumn;
     Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1, each start = 1/(Nc + 1)) "Component mole fraction";
     Real Pdew(unit = "Pa", min = 0, start = sum(C[:].Pc)/Nc) "Dew point pressure";
     Real Pbubl(unit = "Pa", min = 0, start = sum(C[:].Pc)/Nc) "Bubble point pressure";
+
+    //Thermodynamics packages variables
+    Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3]; 
+    Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
+    Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];  
    
     replaceable Simulator.Files.Interfaces.matConn In(Nc = Nc) if Bin annotation(
       Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

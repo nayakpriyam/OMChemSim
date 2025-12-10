@@ -35,8 +35,13 @@ within Simulator.UnitOperations.DistillationColumn;
       Placement(visible = true, transformation(origin = {252, -588}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {250, -598}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Simulator.Files.Interfaces.matConn Out_s[Nout](each Nc = Nc) annotation(
       Placement(visible = true, transformation(origin = {-36, 32}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-70, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    Simulator.Files.Interfaces.enConn En[NQ](each Nc = Nc) annotation(
-      Placement(visible = true, transformation(origin = {-34, -54}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-70, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    //Simulator.Files.Interfaces.enConn En[NQ](each Nc = Nc) annotation(
+    //  Placement(visible = true, transformation(origin = {-34, -54}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-70, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0))); //Commented out since energy connectors don't have Nc parameters
+    replaceable Simulator.UnitOperations.DistillationColumn.Cond condenser(Nc = Nc, C = C, Ctype = Ctype, Bin = Bin_t[1]);
+    replaceable Simulator.UnitOperations.DistillationColumn.Reb  reboiler(Nc = Nc, C = C, Bin = Bin_t[Nt]);
+    parameter Boolean Bin_tray[Nt-2] = Bin_t[2:Nt-1]; //Temporary workaround until bug is fixed
+    replaceable Simulator.UnitOperations.DistillationColumn.DistTray tray[2](each Nc = Nc, each C = C, Bin = Bin_tray);
+    
   equation
   for i in 1:Ni loop
     if InT_s[i] == 1 then

@@ -4,10 +4,11 @@ model MaterialStream "Model representing Material Stream"
   //1 -  Mixture, 2 - Liquid phase, 3 - Gas Phase
   extends Simulator.Files.Icons.MaterialStream;
   import Simulator.Files.*;
-  parameter Integer Nc "Number of components" annotation(
-    Dialog(tab = "Stream Specifications", group = "Component Parameters"));
-  parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc] "Component instances array" annotation(
-    Dialog(tab = "Stream Specifications", group = "Component Parameters"));
+  //Thermodynamics packages variables
+  Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3];
+  Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
+  Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];
+  //Stream variables
   Real P(unit = "Pa", min = 0, start = Pg) "Pressure";
   Real T(unit = "K", start = Tg) "Temperature";
   Real Pbubl(unit = "Pa", min = 0, start = Pmin) "Bubble point pressure";
@@ -141,3 +142,4 @@ annotation(
 </div><div><br></div><div>For variables which are decalared as 1-D array, the array size represent the phase where the array element indices 1 represents mixed phase, 2 represents liquid phase and 3 represents vapor phase.</div><div><br></div><div>For example, variable <b>F_p[3]</b> represents <i>Total molar flow in different phase</i>. So when simulated, the variables in the results will be as follow:</div><div>F_p[1] is Molar flow in mixed phase</div><div>F_p[2] is Molar flow in liquid phase</div><div>F_p[3] is Molar flow in vapor phase</div><div><br></div><div><br></div><div>For variables which are decalared as 2-D array, the first indice represent phase and second indice represents components.<div><br></div><div>For example, variable&nbsp;<b>F_pc[3,Nc]</b>&nbsp;represents <i>Component&nbsp;molar flow in different phase</i>. So when simulated, the variables in the results will be as follow:</div><div>F_pc[1,Nc] is Molar flow of Nc<sup>th</sup> in mixed phase</div><div>F_pc[2,Nc] is Molar flow of Nc<sup>th</sup> in liquid phase</div><div>F_pc[3,Nc] is Molar flow of Nc<sup>th</sup> in vapor phase</div></div><div><br></div><div><br></div><div><!--StartFragment--><span style=\"font-size: 12px;\">For demonstration on how to use this model to simulate a Material Stream,</span><span style=\"font-size: 12px;\">&nbsp;go to&nbsp;<a href=\"modelica://Simulator.Examples.CompositeMS\">Material Stream Example</a></span><!--EndFragment--></div></body></html>"));
     
     end MaterialStream;
+

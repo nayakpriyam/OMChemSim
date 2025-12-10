@@ -14,12 +14,12 @@ package UNIQUAC
     input Real R[NOC], Q[NOC];
     input Real tow[NOC, NOC];
     input Real towk[N + 1, NOC, NOC];
-    parameter Real Z = 10 "Compresseblity Factor";
-    parameter Real R_gas = 1.98721 "Gas Constant";
     //Activity coefficients
     output Real gammaBubl1[N + 1], gammaBubl2[N + 1];
   protected
     //Intermediate parameters used to calculate the Combinatorial and Residual contribution"
+    parameter Real Z = 10 "Compresseblity Factor";
+    parameter Real R_gas = 1.98721 "Gas Constant";
     Real r_bubl[N + 1], q_bubl[N + 1];
     Real teta1_bubl[N + 1], teta2_bubl[N + 1];
     Real S1_bubl[N + 1], S2_bubl[N + 1];
@@ -87,7 +87,7 @@ package UNIQUAC
     //Libraries
     import Simulator.*;
     //Extension of Chemsep Database
-    Simulator.Files.ChemsepDatabase data;
+    import data = Simulator.Files.ChemsepDatabase;
     //Parameter Section
     //Selection of compounds
     parameter data.Water wat;
@@ -120,7 +120,7 @@ package UNIQUAC
     //Vapour Phase Mole Fraction
     Real y1[N + 1](each start = 0.5), y2[N + 1](each start = 0.5);
     //Vapour Pressure at the chosen temperature
-    Real Psat[NOC](unit = "Pa") "Vapour Pressure";
+    Real Psat[NOC](each unit = "Pa") "Vapour Pressure";
     //=========================================================================================
     //Equation Section
   equation
@@ -170,7 +170,7 @@ package UNIQUAC
     //Libraries
     import Simulator.*;
     //Extension of Chemsep database
-    Simulator.Files.ChemsepDatabase data;
+    import data = Simulator.Files.ChemsepDatabase;
     //Parameter Section
     //Selection of compounds
     parameter data.Water wat;

@@ -1,6 +1,6 @@
 within Simulator.Files.ChemsepDatabase;
 
-model GeneralProperties "Model to declare the variables for thermophysical properties"
+record GeneralProperties "Model to declare the variables for thermophysical properties"
     extends Modelica.Icons.Record;
   parameter Integer SN "Serial Number";
   parameter String name "Compound Name";

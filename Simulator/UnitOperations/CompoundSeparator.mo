@@ -22,10 +22,10 @@ model CompoundSeparator
  
   Real Pout_s[2](each unit = "Pa", each min = 0, start={Pg,Pg}) "Outlet stream pressure";
   Real Tout_s[2](each unit = "K", each min = 0, start={Tg,Tg}) "Outlet stream temperature";
-  Real xout_sc[2, Nc](each unit = "-", each min = 0, each max = 1, start={xg,xg}) "Component mole fraction at outlet stream";
+  Real xout_sc[2, Nc](each unit = "-", each min = 0, each max = 1,start = fill(xg,2))  "Component mole fraction at outlet stream";
   Real Fout_s[2](each unit = "mol/s", each min = 0,  start = {Fg,Fg}) "Outlet stream molar flow";
-  Real Fout_sc[2, Nc](each unit = "mol/s", each min = 0,  start = {Fg,Fg}) "Outlet compounds molar flow";
-  Real Fmout_sc[2, Nc](each unit = "kg/s", each min = 0, start={Fg,Fg}) "Outlet compound mass flow";
+  Real Fout_sc[2, Nc](each unit = "mol/s", each min = 0, each start = Fg) "Outlet compounds molar flow";
+  Real Fmout_sc[2, Nc](each unit = "kg/s", each min = 0, each start = Fg) "Outlet compound mass flow";
   Real Hout_s[2](each unit = "kJ/kmol", start={Hvapg,Hliqg}) "Outlet mixture molar enthalpy";
  
   parameter String SepFact_c[Nc] "Separation factor: ''Molar_Flow'', ''Mass_Flow'', ''Inlet_Molar_Flow_Percent'', ''Inlet_Mass_Flow_Percent''" annotation(

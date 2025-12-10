@@ -6,7 +6,7 @@ model CentrifugalPump "Model of a centrifugal pump to provide energy to liquid s
   extends Simulator.Files.Icons.CentrifugalPump;
   parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc] "Component instances array" annotation(
     Dialog(tab = "Pump Specifications", group = "Component Parameters"));
-  parameter Integer Nc = 2 "Number of components" annotation(
+  parameter Integer Nc "Number of components" annotation(
     Dialog(tab = "Pump Specifications", group = "Component Parameters"));
   parameter Real Eff(unit = "-") "Efficiency" annotation(
     Dialog(tab = "Pump Specifications", group = "Calculation Parameters"));

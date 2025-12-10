@@ -17,6 +17,15 @@ model ConversionReactor "Model of a conversion reactor to calculate the outlet s
     Dialog(tab = "Reactor Specifications", group = "Calculation Parameters"));
   parameter Real X_r[Nr] = fill(0.4, Nr) "Conversion of base component" annotation(
     Dialog(tab = "Reactions", group = "Conversion Reaction Parameters"));
+  //Reactor variables
+  parameter Integer Nr "Number of reactions" annotation(
+    Dialog(tab = "Reactions", group = "Conversion Reaction Parameters"));
+  parameter Integer BC_r[Nr] "Base component in the reactions" annotation(
+    Dialog(tab = "Reactions", group = "Conversion Reaction Parameters"));
+  parameter Real Coef_cr[Nc, Nr] "Stoichiometric coefficient of components" annotation(
+    Dialog(tab = "Reactions", group = "Conversion Reaction Parameters"));
+  Real Hr_r[Nr];
+ 
  //=============================================================================
   //Model Variables
   Real Fin(unit = "mol/s", min = 0, start = Fg) "Inlet stream molar flow rate";

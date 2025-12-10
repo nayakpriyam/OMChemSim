@@ -3,20 +3,20 @@ within Simulator.UnitOperations.DistillationColumn;
   model Cond "Model of a condenser used in distillation column"
     import Simulator.Files.*;
     parameter ChemsepDatabase.GeneralProperties C[Nc];
-    parameter Integer Nc = 2 "Number of components";
+    parameter Integer Nc "Number of components";
     parameter Boolean Bin = false;
     Real P(unit = "K", min = 0, start = Pg) "Pressure";
     Real T(unit = "Pa", min = 0, start = Tg) "Temperature";
     Real Fin(unit = "mol/s", min = 0, start =Fg) "Feed molar flow rate";
     Real xin_c[Nc](each unit = "-", each min = 0, each max = 1, start=xg) "Feed components mole fraction"; 
-    Real xvapin_c[Nc](each unit = "-", each min = 0, each max = 1, start=xvapg) "Inlet components vapor molar fraction"; 
+    Real xvapin_c[Nc](each unit = "-", each min = 0, each max = 1, each start=xvapg) "Inlet components vapor molar fraction"; 
     Real Hin(unit = "kJ/kmol",start=Htotg) "Feed inlet molar enthalpy";
    
     Real Fout(unit = "mol/s", min = 0, start = Fg) "Side draw molar flow";
     Real Fvapin(unit = "mol/s", min = 0, start = Fg) "Inlet vapor molar flow";
     Real Fliqout(unit = "mol/s", min = 0, start = Fg) "Outlet liquid molar flow";
     Real xout_c[Nc](each unit = "-", each min = 0, each max = 1, start=xg) "Side draw components mole fraction";
-    Real xliqout_c[Nc](each unit = "-", each min = 0, each max = 1, start=xliqg) "Outlet components liquid mole fraction";
+    Real xliqout_c[Nc](each unit = "-", each min = 0, each max = 1, each start=xliqg) "Outlet components liquid mole fraction";
     
     Real Hvapin(unit = "kJ/kmol",start=Hvapg) "Inlet vapor molar enthalpy";
     Real Hliqout(unit = "kJ/kmol",start=Hliqg) "Outlet liquid molar enthalpy";
@@ -26,6 +26,11 @@ within Simulator.UnitOperations.DistillationColumn;
     Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1,start={xguess,xguess,xguess}) "Component mole fraction";
     Real Pdew(unit = "Pa", min = 0, start = Pmax) "Dew point pressure";
     Real Pbubl(unit = "Pa", min = 0,start=Pmin) "Bubble point pressure";
+    
+    //Thermodynamics packages variables  
+    Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3]; 
+    Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
+    Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];  
     
     //String sideDrawType(start = "Null");
     //L or V

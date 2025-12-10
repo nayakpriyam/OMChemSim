@@ -17,8 +17,6 @@ for i in 1:Nc loop
  if Sc[i]<0 then
  N:=i;
  break;
- else
- i:=i;
  end if;
 end for;
 
@@ -30,11 +28,7 @@ if Sc[i]<0 then
 if v2<v1 then
  N:=i;
  v1:=v2;
- else
- i:=i;
  end if;
- else
-  i:=i;
-  end if;
-  end for;
+ end if;
+ end for;
 end BaseCalc;

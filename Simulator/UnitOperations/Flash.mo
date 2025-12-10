@@ -17,6 +17,10 @@ model Flash "Model of a flash column to separate vapor and liquid phases from a 
     Dialog(tab = "Flash Specifications", group = "Calculation Parameters"));
   parameter Real Pdef(unit = "Pa") = 101325 "Separation pressure if BPdef is true" annotation(
     Dialog(tab = "Flash Specifications", group = "Calculation Parameters"));
+  //Thermodynamics packages variables  
+  Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3]; 
+  Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
+  Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];
   //==============================================================================
   //Model Variables
   Real T(unit = "K", start = Tg, min = 0) "Flash column temperature";

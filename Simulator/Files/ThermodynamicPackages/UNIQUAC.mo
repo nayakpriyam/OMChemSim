@@ -3,6 +3,14 @@ within Simulator.Files.ThermodynamicPackages;
   model UNIQUAC
     //Libraries
     import Simulator.Files.*;
+    //Components parameters
+    parameter Integer Nc "Number of components";
+    parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc];
+    Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1);
+    Real P(unit = "Pa", min = 0) "Pressure";
+    Real T(unit = "K") "Temperature";
+    Real Pbubl(unit = "Pa", min = 0) "Bubble point pressure";
+    Real Pdew(unit = "Pa", min = 0) "dew point pressure";    
     //Parameter Section
     //Binary Interaction Parameters
     //Function :BIP_UNIQUAC is used to obtain the interaction parameters
@@ -14,7 +22,7 @@ within Simulator.Files.ThermodynamicPackages;
     //Variable Section
     Real tow[Nc, Nc] "Energy interaction parameter";
     //Intermediate variables to calculate the combinatorial and residual part of activity coefficient at the input conditions
-    Real r(each start = 2, min = 0, max = 1), q(each start = 2);
+    Real r(start = 2), q(start = 2);
     Real theta_c[Nc];
     Real S_c[Nc](each start = 1);
     Real Sum_c[Nc];
@@ -36,7 +44,7 @@ within Simulator.Files.ThermodynamicPackages;
     Real  gmacdew_c[Nc](each start = 5) "Combinatorial Part of activity coefficent at dew point";
     Real  gmardew_c[Nc](each start = 2.5) "Residual part of activity coefficient at dew point";
     Real  gmaolddew_c[Nc](each start = 2.2) "Combinatorial Part of activity coefficent(without correction)";
-    Real gmadew_c[Nc](each start = 2.2) "Activity coefficent at dew point";
+    Real  gmadew_c[Nc](each start = 2.2) "Activity coefficent at dew point";
     //Fugacity coefficient
     Real  phivapdew_c[Nc] "Vapour Fugacity coefficient at dew point";
     Real phildew_c[Nc](each start = 0.5);

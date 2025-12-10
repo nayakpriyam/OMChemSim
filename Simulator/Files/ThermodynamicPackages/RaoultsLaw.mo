@@ -1,10 +1,14 @@
 within Simulator.Files.ThermodynamicPackages;
 
   model RaoultsLaw
-    import Simulator.Files.Thermodynamic_Functions.*;
+    import Simulator.Files.ThermodynamicFunctions.*;
+    parameter Integer Nc "Number of components";
+    parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc];
     Real K_c[Nc](each min = 0), Cpres_p[3], Hres_p[3], Sres_p[3];
     Real gma_c[Nc], gmabubl_c[Nc], gmadew_c[Nc];
     Real philiqbubl_c[Nc], phivapdew_c[Nc], Pvap_c[Nc];
+    Real P(unit = "Pa", min = 0) "Pressure";
+    Real T(unit = "K") "Temperature";
   equation
     for i in 1:Nc loop
       gma_c[i] = 1;

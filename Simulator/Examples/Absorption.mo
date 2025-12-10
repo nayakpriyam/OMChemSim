@@ -17,8 +17,8 @@ package Absorption "Example of Simulating an Absorption Column"
   end Tray;
 
   model AbsColumn "Extension of Absorption COlumn with instance of Tray"
-    extends Simulator.UnitOperations.AbsorptionColumn.AbsCol;
-    Tray tray[Nt](each Nc = Nc, each C = C);
+    extends Simulator.UnitOperations.AbsorptionColumn.AbsCol(
+    redeclare Tray tray[Nt](each Nc = Nc, each C = C));
   annotation(
       Documentation(info = "<html><head></head><body><span style=\"font-size: 12px;\">This is a non-executable model is created inside the package Absorption to extend the&nbsp;</span><a href=\"modelica://Simulator.UnitOperations.AbsorptionColumn.AbsCol\">Absorption Column</a><span style=\"font-size: 12px;\">&nbsp;model along with the necessary property method from&nbsp;</span>ThermodynamicPackages<span style=\"font-size: 12px;\">&nbsp;which is&nbsp;</span><a href=\"modelica://Simulator.Files.ThermodynamicPackages.RaoultsLaw\">RaoultsLaw</a><span style=\"font-size: 12px;\">&nbsp;in this case.</span><div><br></div><div>Tray model is also instantiated in this model to complete building of absorption column model.<br><div><span style=\"font-size: 12px;\"><br></span></div><div>It will be instantiated in the&nbsp;<a href=\"modelica://Simulator.Examples.Absorption.AbsorptionSimulation\">AbsorptionSimulation</a>&nbsp;model to create the required instance of the absorption column model.</div></div></body></html>"));
   end AbsColumn;
@@ -39,7 +39,7 @@ package Absorption "Example of Simulating an Absorption Column"
       Placement(visible = true, transformation(origin = {52, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Simulator.Examples.Absorption.MS S4(Nc = Nc, C = C) annotation(
       Placement(visible = true, transformation(origin = {52, -94}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Simulator.Examples.Absorption.MS S2 annotation(
+    Simulator.Examples.Absorption.MS S2(Nc = Nc, C = C) annotation(
       Placement(visible = true, transformation(origin = {-88, -54}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(B1.Out_Bot, S4.In) annotation(

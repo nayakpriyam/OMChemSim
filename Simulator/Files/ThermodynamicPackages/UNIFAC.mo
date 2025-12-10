@@ -4,6 +4,14 @@ within Simulator.Files.ThermodynamicPackages;
     //Libraries
     import Simulator.Files.*;
     import Simulator.Files.ThermodynamicFunctions;
+    //Stream Parameters
+    parameter Integer Nc "Number of components";
+    parameter Simulator.Files.ChemsepDatabase.GeneralProperties C[Nc];
+    Real x_pc[3, Nc](each unit = "-", each min = 0, each max = 1); 
+    Real P(unit = "Pa", min = 0) "Pressure";
+    Real T(unit = "K") "Temperature";
+    Real Pbubl(unit = "Pa", min = 0) "Bubble point pressure";
+    Real Pdew(unit = "Pa", min = 0) "dew point pressure";   
     //Parameter Section
     parameter Integer m = 4 "substitue of number of different group";
     parameter Integer k = 4 "number of different group in component i";
@@ -55,6 +63,8 @@ within Simulator.Files.ThermodynamicPackages;
     Real gmardew_c[Nc] "residual activity coefficient of components at dew point";
     Real sumdew_c[Nc];
     Real xliqdew_c[Nc](each start = 0.5);
+    //?? Parameters
+    Real B[Nc, k];
     //==============================================================================
   equation
     Cpres_c[:] = zeros(3);
@@ -105,7 +115,7 @@ within Simulator.Files.ThermodynamicPackages;
     sum_c[:] := fill(0, Nc);
     for j in 1:k loop
       for i in 1:Nc loop
-        sum_c[i] := sum_c[i] + theta_k[j] * B_ck[i, j] / S_k[j] - e_kc[j, i] * log(B[i, j] / S_k[j]);
+        sum_c[i] := sum_c[i] + theta_k[j] * B_ck[i, j] / S_k[j] - e_kc[j, i] * log(B_ck[i, j] / S_k[j]);
         gmares_c[i] := exp(q[i] * (1 - sum_c[i]));
       end for;
     end for;

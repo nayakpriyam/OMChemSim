@@ -1,6 +1,6 @@
 within Simulator.UnitOperations.AbsorptionColumn;
 
-model AbsCol "Model of an absorption column representing fractionating towers where mixture is separated in equilibrium stages"
+model AbsCol "Model of an absorption column representing fractionating towers where mixture is separated in equilibrium stages" //Model seems to be broken, doesn't run on the old frontend either.
     extends Simulator.Files.Icons.AbsorptionColumn;
     import data = Simulator.Files.ChemsepDatabase;
     parameter data.GeneralProperties C[Nc] "Component instances array" annotation(
@@ -18,6 +18,7 @@ model AbsCol "Model of an absorption column representing fractionating towers wh
       Placement(visible = true, transformation(origin = {100, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {250, 300}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Simulator.Files.Interfaces.matConn Out_Bot(Nc = Nc) annotation(
       Placement(visible = true, transformation(origin = {100, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {250, -300}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    replaceable Simulator.UnitOperations.AbsorptionColumn.AbsTray tray[2](each Nc = Nc);
   equation
 //connector equation
   tray[1].Fliq_s[1] = In_Top.F;
